@@ -52,27 +52,37 @@
   width: 1000px;
 }
 
-th, td {
+#filterTable th, td {
   border: 1px solid black;
   padding: 10px;
   text-align: left;
 }
 
 
-/* FilterDIalog */
-#modal {
+/* FilterDialog */
+#filterDialog {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100%;
 }
 
-#modalContainer {
+#filterDialogBar {
+  position: absolute;
+  width: 100%;
+  height: 40px;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: #5aa9d1;
+}
+
+#filterDialogContainer {
   background-color: white;
   padding: 10px;
-  width: 800px;
-  height: 300px;
-  min-height: 300px;
+  width: 630px;
+  height: 260px;
+  min-height: 260px;
   max-height: 100%;
   overflow-y: auto;
   position: relative;
@@ -82,17 +92,100 @@ th, td {
 #closeButton {
   cursor: pointer;
   position: absolute;
-  top: 10px;
+  top: 5px;
   right: 10px;
+  background-color: transparent;
+  border: none;
+  font-size: 25px;
+  color: white;
 }
 
-#modalContainer select, input {
-  width: 200px;
-  height: 30px;
+#dialogBarButton {
+  position: absolute;
+  left: 20px;
+  bottom: -8px;
+  color: white;
+  font-size: 16px;
+}
+
+#filterDialogContainer input {
+  width: 180px;
+  height: 25px;
+}
+
+#filterDialogContainer select {
+  width: 130px;
+  height: 31px;
+}
+
+#filterDialogInputs {
+  padding-top: 40px;
+  padding-left: 20px;
+}
+
+#filterDialogInputs h4 {
+  width: 100px;
 }
 
 #filterCriteria, #filterName {
   display: flex;
   flex-direction: row;
   align-items: center;
+}
+
+#filterCriteria {
+  margin-bottom: -15px;
+}
+
+#deleteCriteriaButton {
+  width: 31px;
+  height: 31px;
+  cursor: pointer;
+  border: none;
+  background-color: #cc474c;
+  color: white;
+  font-size: 25px;
+}
+
+#addRowButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#addCriteriaButton {
+  cursor: pointer;
+  width: 75px;
+  height: 31px;
+  border: none;
+  color: white;
+  font-size: 15px;
+  background-color: #39a364;
+  margin-top: 20px;
+}
+
+#saveOrCancelButtons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#saveOrCancelButtons button {
+  cursor: pointer;
+  width: 75px;
+  height: 31px;
+  border: none;
+  color: white;
+  font-size: 15px;
+  margin-top: 20px;
+}
+
+#closeModal {
+  background-color: #cc474c;
+  color: white;
+}
+
+#saveFilter {
+  background-color: #5aa9d1;
+  color: white;
 }
