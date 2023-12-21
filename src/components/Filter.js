@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { FilterDialog } from './FilterDialog';
+import { FilterDialog } from "./FilterDialog";
 
 export default function Filter() {
   const [filters, setFilters] = useState([]);
@@ -7,10 +7,10 @@ export default function Filter() {
   const openModal = () => setModalToOpen(true);
   const closeModal = () => setModalToOpen(false);
   const getFilters = () => {
-    fetch('http://localhost:8090/bookFilter/filters')
+    fetch("http://localhost:8090/bookFilter/filters")
       .then(response => response.json())
       .then(data => setFilters(data))
-      .catch(error => console.error('Error: ', error));
+      .catch(error => console.error("Error: ", error));
   };
 
   useEffect(() => {
