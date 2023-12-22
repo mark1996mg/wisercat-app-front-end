@@ -24,6 +24,10 @@ export const FilterDialog = ({ handleOpen, handleClose }) => {
   };
 
   const postDataToServer = () => {
+    const isFilterDataValid = checkIfFilterDataIsValid(filter, criteriaRows);
+    if (!isFilterDataValid) {
+      return;
+    }
     fetch("http://localhost:8090/bookFilter/addFilter", {
       method: "POST",
       body: JSON.stringify(filter),
@@ -37,11 +41,10 @@ export const FilterDialog = ({ handleOpen, handleClose }) => {
           handleClose();
           window.location.reload();
       } else {
-          console.log("Problems with savign filter");
+          console.error("Problems with savign filter");
       }
     })
   }
-
 
   const createNewCriteria = () => {
     const newRow = {
@@ -146,7 +149,7 @@ export const FilterDialog = ({ handleOpen, handleClose }) => {
               <div id="searchInput">
                 {(() => {
                   if (row.option == "AMOUNT") {
-                    return (<><input type="number" onChange={(e) => handleInputValueChange(e, row.id)}></input></>);
+                    return (<><input type="number" min="0" onChange={(e) => handleInputValueChange(e, row.id)}></input></>);
                   } else if (row.option == "DATE") {
                     return (<><input type="date" onChange={(e) => handleInputValueChange(e, row.id)}></input></>);
                   } else {
@@ -169,3 +172,44 @@ export const FilterDialog = ({ handleOpen, handleClose }) => {
     </Modal>
   );
 };
+
+const checkIfFilterDataIsValid = (filter, criteriaRows) => {
+  var errorString = "";
+  var nameIsValid = true;
+  if (filter.name == null || filter.name.trim().length == 0) {
+    errorString += "Filter name must not be empty" + "\n";
+    nameIsValid = false;
+  }
+  var criteriaIsPresent = true;
+  if (criteriaRows.length < 1) {
+    errorString += "At least 1 criteria must be present" + "\n";
+    criteriaIsPresent = false;
+  }
+  const criteriaIsValid = criteriaRows.map(row => {
+    if (row.option == "AMOUNT") {
+      if (row.inputValue == null || row.inputValue == "" || row.inputValue < 0) {
+        errorString += "Amount of copies sold must be 0 or larger" + "\n";
+        return false;
+      };
+    } else if (row.option == "DATE") {
+      if (row.inputValue == null || row.inputValue == "") {
+        errorString += "Publishing date must be set" + "\n";
+        return false;
+      };
+    } else {
+      if (row.inputValue == null || row.inputValue.trim().length == 0) {
+        errorString += "Field must not be empty" + "\n";
+        return false;
+      };
+    }
+    return true;
+  });
+
+  const allCriteriaAreValid = criteriaIsValid.every(isValid => isValid);
+
+  if (!criteriaIsPresent || !nameIsValid || !allCriteriaAreValid) {
+    alert(errorString);
+    return false;
+  }
+  return true;
+}
